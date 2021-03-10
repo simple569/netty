@@ -81,7 +81,7 @@ public final class SocketUtils {
             throw (IOException) e.getCause();
         }
     }
-
+    /**非阻塞模式,在连接过程中*/
     public static boolean connect(final SocketChannel socketChannel, final SocketAddress remoteAddress)
             throws IOException {
         try {

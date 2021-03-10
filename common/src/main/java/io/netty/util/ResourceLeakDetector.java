@@ -44,7 +44,7 @@ public class ResourceLeakDetector<T> {
 
     private static final String PROP_LEVEL_OLD = "io.netty.leakDetectionLevel";
     private static final String PROP_LEVEL = "io.netty.leakDetection.level";
-    private static final Level DEFAULT_LEVEL = Level.SIMPLE;
+    private static final Level DEFAULT_LEVEL = Level.SIMPLE;//默认级别的内存泄露
 
     private static final String PROP_TARGET_RECORDS = "io.netty.leakDetection.targetRecords";
     private static final int DEFAULT_TARGET_RECORDS = 4;
@@ -52,9 +52,9 @@ public class ResourceLeakDetector<T> {
     private static final String PROP_SAMPLING_INTERVAL = "io.netty.leakDetection.samplingInterval";
     // There is a minor performance benefit in TLR if this is a power of 2.
     private static final int DEFAULT_SAMPLING_INTERVAL = 128;
-
+    /**track 时record长度超过该值时,需要drop*/
     private static final int TARGET_RECORDS;
-    static final int SAMPLING_INTERVAL;
+    static final int SAMPLING_INTERVAL;//资源泄露抽样
 
     /**
      * Represents the level of resource leak detection.
@@ -292,7 +292,7 @@ public class ResourceLeakDetector<T> {
 
         // Detect and report previous leaks.
         for (;;) {
-            DefaultResourceLeak ref = (DefaultResourceLeak) refQueue.poll();
+            DefaultResourceLeak ref = (DefaultResourceLeak) refQueue.poll();//被引用的对象只存在weakReference,表示对象伟手动释放DefaultResourceLeak.close
             if (ref == null) {
                 break;
             }
@@ -594,7 +594,7 @@ public class ResourceLeakDetector<T> {
         private static final Record BOTTOM = new Record();
 
         private final String hintString;
-        private final Record next;
+        private final Record next;//链表的下一个节点
         private final int pos;
 
         Record(Record next, Object hint) {

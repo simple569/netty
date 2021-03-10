@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 
 import io.netty.util.internal.ReferenceCountUpdater;
 
-/**
+/**   <p>实现引用计数的ByteBuf</p>
  * Abstract base class for {@link ByteBuf} implementations that count references.
  */
 public abstract class AbstractReferenceCountedByteBuf extends AbstractByteBuf {

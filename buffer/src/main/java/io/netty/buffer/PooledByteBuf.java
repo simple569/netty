@@ -37,7 +37,7 @@ abstract class PooledByteBuf<T> extends AbstractReferenceCountedByteBuf {
     protected int length;
     int maxLength;
     PoolThreadCache cache;
-    ByteBuffer tmpNioBuf;
+    ByteBuffer tmpNioBuf;//真正使用的底层ByteBuffer
     private ByteBufAllocator allocator;
 
     @SuppressWarnings("unchecked")

@@ -25,7 +25,7 @@ import java.nio.ByteBuffer;
  * Simplistic {@link ByteBufAllocator} implementation that does not pool anything.
  */
 public final class UnpooledByteBufAllocator extends AbstractByteBufAllocator implements ByteBufAllocatorMetricProvider {
-
+    /**统计*/
     private final UnpooledByteBufAllocatorMetric metric = new UnpooledByteBufAllocatorMetric();
     private final boolean disableLeakDetector;
     private final boolean noCleaner;
@@ -87,7 +87,7 @@ public final class UnpooledByteBufAllocator extends AbstractByteBufAllocator imp
     @Override
     protected ByteBuf newDirectBuffer(int initialCapacity, int maxCapacity) {
         final ByteBuf buf;
-        if (PlatformDependent.hasUnsafe()) {
+        if (PlatformDependent.hasUnsafe()) {//存在Unsafe
             buf = noCleaner ? new InstrumentedUnpooledUnsafeNoCleanerDirectByteBuf(this, initialCapacity, maxCapacity) :
                     new InstrumentedUnpooledUnsafeDirectByteBuf(this, initialCapacity, maxCapacity);
         } else {

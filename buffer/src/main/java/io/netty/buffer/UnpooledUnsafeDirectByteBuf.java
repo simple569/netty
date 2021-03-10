@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
-/**
+/**   <p>基于NIO direct的ByteBuffer,但是使用Unsafe访问DirectByteBuf</p>
  * A NIO {@link ByteBuffer} based buffer. It is recommended to use
  * {@link UnpooledByteBufAllocator#directBuffer(int, int)}, {@link Unpooled#directBuffer(int)} and
  * {@link Unpooled#wrappedBuffer(ByteBuffer)} instead of calling the constructor explicitly.}

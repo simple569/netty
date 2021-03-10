@@ -32,7 +32,7 @@ import java.nio.ByteBuffer;
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/**
+/**    <p>内存分配线程级别的缓存,一个Arena对应多个PoolThreadCache</p>
  * Acts a Thread cache for allocations. This implementation is moduled after
  * <a href="http://people.freebsd.org/~jasone/jemalloc/bsdcan2006/jemalloc.pdf">jemalloc</a> and the descripted
  * technics of
@@ -317,7 +317,7 @@ final class PoolThreadCache {
         }
         return cache(smallSubPageHeapCaches, idx);
     }
-
+    /**使用不通的MemoryCache数组*/
     private MemoryRegionCache<?> cacheForNormal(PoolArena<?> area, int normCapacity) {
         if (area.isDirect()) {
             // sizeClass == Normal => normCapacity >= pageSize => the shifted value > 0

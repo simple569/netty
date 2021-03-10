@@ -15,29 +15,29 @@
  */
 
 package io.netty.buffer;
-
+/***/
 final class PoolSubpage<T> implements PoolSubpageMetric {
 
     final PoolChunk<T> chunk;
     private final int memoryMapIdx;
-    private final int runOffset;
+    private final int runOffset;//对应Page节点在PoolChunk#memory的偏移
     private final int pageSize;
-    private final long[] bitmap;
+    private final long[] bitmap;//位图 标记已分配 每个字节表示被占用的region
 
     PoolSubpage<T> prev;
     PoolSubpage<T> next;
 
     boolean doNotDestroy;
-    int elemSize;
-    private int maxNumElems;
+    int elemSize;//元素大小
+    private int maxNumElems;//最大可分配的region
     private int bitmapLength;
     private int nextAvail;
-    private int numAvail;
+    private int numAvail;//可用
 
     // TODO: Test if adding padding helps under contention
     //private long pad0, pad1, pad2, pad3, pad4, pad5, pad6, pad7;
 
-    /** Special constructor that creates a linked list head */
+    /** Special constructor that creates a linked list head 用于创建链表的头部节点*/
     PoolSubpage(int pageSize) {
         chunk = null;
         memoryMapIdx = -1;

@@ -15,12 +15,12 @@
  */
 package io.netty.buffer;
 
-/**
+/**    <p>分为两种Allocator, Pooled,UnPooled ,Allocator创建的ByteBuf也分两种,Heap/Direct,Direct的实现方式分两种(Safe/Unsafe)</p>
  * Implementations are responsible to allocate buffers. Implementations of this interface are expected to be
  * thread-safe.
  */
 public interface ByteBufAllocator {
-
+    /**默认ByteBufAllocator*/
     ByteBufAllocator DEFAULT = ByteBufUtil.DEFAULT_ALLOCATOR;
 
     /**

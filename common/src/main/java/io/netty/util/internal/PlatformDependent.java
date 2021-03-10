@@ -325,7 +325,7 @@ public final class PlatformDependent {
         return CAN_ENABLE_TCP_NODELAY_BY_DEFAULT;
     }
 
-    /**
+    /**   <p>存在sun.misc.Unsafe</p>
      * Return {@code true} if {@code sun.misc.Unsafe} was found on the classpath and can be used for accelerated
      * direct memory access.
      */

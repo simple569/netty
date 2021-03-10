@@ -191,7 +191,7 @@ public interface ChannelHandlerContext extends AttributeMap, ChannelInboundInvok
      */
     ChannelPipeline pipeline();
 
-    /**
+    /**   <p>关联的ByteBufAllocator</p>
      * Return the assigned {@link ByteBufAllocator} which will be used to allocate {@link ByteBuf}s.
      */
     ByteBufAllocator alloc();

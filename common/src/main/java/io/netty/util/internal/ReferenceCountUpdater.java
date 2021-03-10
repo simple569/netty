@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
 import io.netty.util.IllegalReferenceCountException;
 import io.netty.util.ReferenceCounted;
 
-/**
+/**   <p>引用计数通用逻辑</p>
  * Common logic for {@link ReferenceCounted} implementations
  */
 public abstract class ReferenceCountUpdater<T extends ReferenceCounted> {
@@ -52,7 +52,7 @@ public abstract class ReferenceCountUpdater<T extends ReferenceCounted> {
     }
 
     protected abstract AtomicIntegerFieldUpdater<T> updater();
-
+    /**引用计数的偏移量*/
     protected abstract long unsafeOffset();
 
     public final int initialValue() {
@@ -134,7 +134,7 @@ public abstract class ReferenceCountUpdater<T extends ReferenceCounted> {
 
     public final boolean release(T instance) {
         int rawCnt = nonVolatileRawCnt(instance);
-        return rawCnt == 2 ? tryFinalRelease0(instance, 2) || retryRelease0(instance, 1)
+        return rawCnt == 2 ? tryFinalRelease0(instance, 2) || retryRelease0(instance, 1)  //后半部分循环CAS
                 : nonFinalRelease0(instance, 1, rawCnt, toLiveRealRefCnt(rawCnt, 1));
     }
 
@@ -144,7 +144,7 @@ public abstract class ReferenceCountUpdater<T extends ReferenceCounted> {
         return decrement == realCnt ? tryFinalRelease0(instance, rawCnt) || retryRelease0(instance, decrement)
                 : nonFinalRelease0(instance, decrement, rawCnt, realCnt);
     }
-
+    /**一次CAS*/
     private boolean tryFinalRelease0(T instance, int expectRawCnt) {
         return updater().compareAndSet(instance, expectRawCnt, 1); // any odd number will work
     }

@@ -74,7 +74,7 @@ public final class ByteBufUtil {
 
     static {
         String allocType = SystemPropertyUtil.get(
-                "io.netty.allocator.type", PlatformDependent.isAndroid() ? "unpooled" : "pooled");
+                "io.netty.allocator.type", PlatformDependent.isAndroid() ? "unpooled" : "pooled");//非安卓平台使用pooled
         allocType = allocType.toLowerCase(Locale.US).trim();
 
         ByteBufAllocator alloc;
@@ -85,7 +85,7 @@ public final class ByteBufUtil {
             alloc = PooledByteBufAllocator.DEFAULT;
             logger.debug("-Dio.netty.allocator.type: {}", allocType);
         } else {
-            alloc = PooledByteBufAllocator.DEFAULT;
+            alloc = PooledByteBufAllocator.DEFAULT;//
             logger.debug("-Dio.netty.allocator.type: pooled (unknown: {})", allocType);
         }
 

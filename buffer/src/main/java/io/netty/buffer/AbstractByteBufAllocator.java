@@ -79,7 +79,7 @@ public abstract class AbstractByteBufAllocator implements ByteBufAllocator {
         }
         return buf;
     }
-
+    /**默认使用direct,参见buffer()*/
     private final boolean directByDefault;
     private final ByteBuf emptyBuf;
 

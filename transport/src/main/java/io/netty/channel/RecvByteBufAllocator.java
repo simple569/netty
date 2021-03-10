@@ -61,7 +61,7 @@ public interface RecvByteBufAllocator {
          */
         void reset(ChannelConfig config);
 
-        /**
+        /**    <p>当前read loop中已读取的消息数量,</p>
          * Increment the number of messages that have been read for the current read loop.
          * @param numMessages The amount to increment by.
          */

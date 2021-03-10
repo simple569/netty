@@ -37,7 +37,7 @@ import java.nio.channels.NotYetConnectedException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.RejectedExecutionException;
 
-/**
+/**   <p>doXXX方法都是由pipeline的head触发unsafe对应方法,对channel进行实际操作</p>
  * A skeletal {@link Channel} implementation.
  */
 public abstract class AbstractChannel extends DefaultAttributeMap implements Channel {

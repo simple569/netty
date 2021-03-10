@@ -196,7 +196,7 @@ public abstract class AbstractNioChannel extends AbstractChannel {
          */
         SelectableChannel ch();
 
-        /**
+        /**  eventloop 调用  OP_CONNECT 的key
          * Finish connect
          */
         void finishConnect();
@@ -245,7 +245,7 @@ public abstract class AbstractNioChannel extends AbstractChannel {
                 }
 
                 boolean wasActive = isActive();
-                if (doConnect(remoteAddress, localAddress)) {
+                if (doConnect(remoteAddress, localAddress)) {//EINPROGRESS 返回码 表示还在连接中
                     fulfillConnectPromise(promise, wasActive);
                 } else {
                     connectPromise = promise;
@@ -264,7 +264,7 @@ public abstract class AbstractNioChannel extends AbstractChannel {
                                     close(voidPromise());
                                 }
                             }
-                        }, connectTimeoutMillis, TimeUnit.MILLISECONDS);
+                        }, connectTimeoutMillis, TimeUnit.MILLISECONDS);//连接超时定时任务
                     }
 
                     promise.addListener(new ChannelFutureListener() {
@@ -285,7 +285,7 @@ public abstract class AbstractNioChannel extends AbstractChannel {
                 closeIfClosed();
             }
         }
-
+        /**fill promise*/
         private void fulfillConnectPromise(ChannelPromise promise, boolean wasActive) {
             if (promise == null) {
                 // Closed via cancellation and the promise has been notified already.

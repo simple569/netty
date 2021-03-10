@@ -101,7 +101,7 @@ public abstract class ResourceLeakDetectorFactory {
         DefaultResourceLeakDetectorFactory() {
             String customLeakDetector;
             try {
-                customLeakDetector = SystemPropertyUtil.get("io.netty.customResourceLeakDetector");
+                customLeakDetector = SystemPropertyUtil.get("io.netty.customResourceLeakDetector");//用户自定义的LeakDetector类
             } catch (Throwable cause) {
                 logger.error("Could not access System property: io.netty.customResourceLeakDetector", cause);
                 customLeakDetector = null;

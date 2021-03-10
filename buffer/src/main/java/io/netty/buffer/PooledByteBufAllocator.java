@@ -96,7 +96,7 @@ public class PooledByteBufAllocator extends AbstractByteBufAllocator implements 
          * See https://github.com/netty/netty/issues/3888.
          */
         final int defaultMinNumArena = NettyRuntime.availableProcessors() * 2;
-        final int defaultChunkSize = DEFAULT_PAGE_SIZE << DEFAULT_MAX_ORDER;
+        final int defaultChunkSize = DEFAULT_PAGE_SIZE << DEFAULT_MAX_ORDER;//默认8K << 11
         DEFAULT_NUM_HEAP_ARENA = Math.max(0,
                 SystemPropertyUtil.getInt(
                         "io.netty.allocator.numHeapArenas",
@@ -120,7 +120,7 @@ public class PooledByteBufAllocator extends AbstractByteBufAllocator implements 
         DEFAULT_MAX_CACHED_BUFFER_CAPACITY = SystemPropertyUtil.getInt(
                 "io.netty.allocator.maxCachedBufferCapacity", 32 * 1024);
 
-        // the number of threshold of allocations when cached entries will be freed up if not frequently used
+        // the number of threshold of allocations when cached entries will be freed up if not frequently used  会被销毁的非经常使用的缓存条目的 分配的内存的阈值
         DEFAULT_CACHE_TRIM_INTERVAL = SystemPropertyUtil.getInt(
                 "io.netty.allocator.cacheTrimInterval", 8192);
 
@@ -142,13 +142,13 @@ public class PooledByteBufAllocator extends AbstractByteBufAllocator implements 
         }
 
         DEFAULT_USE_CACHE_FOR_ALL_THREADS = SystemPropertyUtil.getBoolean(
-                "io.netty.allocator.useCacheForAllThreads", true);
+                "io.netty.allocator.useCacheForAllThreads", true);//对于所有线程使用cache
 
         DEFAULT_DIRECT_MEMORY_CACHE_ALIGNMENT = SystemPropertyUtil.getInt(
                 "io.netty.allocator.directMemoryCacheAlignment", 0);
 
         // Use 1023 by default as we use an ArrayDeque as backing storage which will then allocate an internal array
-        // of 1024 elements. Otherwise we would allocate 2048 and only use 1024 which is wasteful.
+        // of 1024 elements. Otherwise we would allocate 2048 and only use 1024 which is wasteful.   1023
         DEFAULT_MAX_CACHED_BYTEBUFFERS_PER_CHUNK = SystemPropertyUtil.getInt(
                 "io.netty.allocator.maxCachedByteBuffersPerChunk", 1023);
 
@@ -463,7 +463,7 @@ public class PooledByteBufAllocator extends AbstractByteBufAllocator implements 
         }
 
         @Override
-        protected synchronized PoolThreadCache initialValue() {
+        protected synchronized PoolThreadCache initialValue() {//初始化PoolThreadCache
             final PoolArena<byte[]> heapArena = leastUsedArena(heapArenas);
             final PoolArena<ByteBuffer> directArena = leastUsedArena(directArenas);
 
@@ -496,7 +496,7 @@ public class PooledByteBufAllocator extends AbstractByteBufAllocator implements 
                 return null;
             }
 
-            PoolArena<T> minArena = arenas[0];
+            PoolArena<T> minArena = arenas[0];//查找最少被ThreadCaches使用的arena
             for (int i = 1; i < arenas.length; i++) {
                 PoolArena<T> arena = arenas[i];
                 if (arena.numThreadCaches.get() < minArena.numThreadCaches.get()) {
